@@ -1,1 +1,2 @@
-# CSC395_S20
+# class-repo
+Private repo for CSCI5143
