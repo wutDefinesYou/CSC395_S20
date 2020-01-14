@@ -1,6 +1,6 @@
 ##### CSC395 Spring 2020
 
-#### Lab 1 : Getting Started
+### Lab 1 : Getting Started
 > CODE DUE: Thursday, January 23 before class <br>
 > Submit via Moodle. 1 file zipped.
 
@@ -12,6 +12,8 @@ The purpose of this lab is to ensure that you have all equipment functional and 
 2. Test your setup with the provided main.c.
 3. Add the yellow LED to the "sanity check." Note: you have to check whether the yellow led is turned on by setting the pin high or low. Just try it and see what happens. The yellow and green should both be on and off at the same time.
 4. Add button B to the while loop. Remember that you have to set up the button pin as input. Whenever button B is pressed, the yellow LED should turn on.
+
+#### Hardware Setup
 
 You can start by installing the Arduino IDE and following the directions to add the Pololu libraries. We will not be using this much, but it is a good thing to have in case your board gets into a weird state -- you can use it to reset.
 
@@ -26,7 +28,7 @@ Use the provided main.c file to test your system.
 > You will probably need to change the port setting in your makefile
 
 - Plug your board into your USB
-- cd minilabs/lab01
+- cd labs/lab01_01_23
 - at command prompt ```make```
 - push the reset button twice on your board which makes the yellow LED blink slowly (it is ready for upload)
 - at command prompt ```make program```
@@ -35,12 +37,11 @@ The leds will flash as it is uploading and you will get a message scroll across 
 
 <hr>
 
-
 #### Important Things to know about your board.
 
-See the cheat sheet for more info: https://github.umn.edu/course-material/repo-rtes-public/blob/master/HardwareResources/AStarCheatSheet.md
+See the cheat sheet for more info: https://github.com/lars1050/CSC395_S20/blob/master/HardwareResources/AStarCheatSheet.md
 
-And see the datasheet on the Atmega.
+And see the datasheet on the Atmega: http://ww1.microchip.com/downloads/en/devicedoc/atmel-7766-8-bit-avr-atmega16u4-32u4_datasheet.pdf
 
 **__Registers__**
 
