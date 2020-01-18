@@ -11,7 +11,7 @@ The purpose of this lab is to ensure that you have all equipment functional and 
 1. Get everything set up as described below.
 2. Test your setup with the provided main.c.
 3. Add the yellow LED to the "sanity check." Note: you have to check whether the yellow led is turned on by setting the pin high or low. Just try it and see what happens. The yellow and green should both be on and off at the same time.
-4. Add button B to the while loop. Remember that you have to set up the button pin as input. Whenever button B is pressed, the yellow LED should turn on.
+4. Add button C to the while loop. Remember that you have to set up the button pin as input. Whenever button C is pressed, the yellow LED should turn on.
 
 #### Hardware Setup
 
