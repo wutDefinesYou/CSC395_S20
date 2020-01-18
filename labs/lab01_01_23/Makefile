@@ -1,4 +1,7 @@
-PORT=/dev/tty.usbmodem1421
+PORT=# for Windows
+		 COM4
+		 # for Mac
+		 #/dev/tty.usbmodem1421
 
 MCU=atmega32u4
 CFLAGS=-g -Wall -mcall-prologues -mmcu=$(MCU) -Os
