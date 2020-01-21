@@ -1,13 +1,5 @@
 #include "leds.h"
 
-/* Limited Scope Variables to be used only inside led.c
-The reason for this is that you cannot define a struct outside of a function, however
-static IO_struct _yellow_local;
-static IO_struct _red_local;
-static IO_struct _green_local;
-*/
-
-
 /* Scope is limited to this file. Used to indicate if LED is initialized. */
 static uint8_t bYellowInit = 0;
 static uint8_t bRedInit = 0;
