@@ -224,11 +224,11 @@ int is_button_pressed(IO_struct * button) {
 
 <hr>
 
-Check that everything compiles using the provided makefile. You should see the green and yellow LED flash twice as part of the light show. Then the yellow led should blink about 1 time per second.
+Check that everything compiles using the provided makefile. You should see the green and yellow LED flash twice as part of the light show. Then the yellow and green led should blink about 1 time per second.
 
 <hr>
 
-### 3. Blinking LEDs
+### 4. Blinking LEDs
 
 Now you can turn to programming the required behavior.
 
