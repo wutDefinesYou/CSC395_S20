@@ -246,7 +246,7 @@ Now you can turn to programming the required behavior.
 
 Note that with your handy dandy support code, you can toggle the yellow LED with this line of code:
 ```
-TOGGLE_BIT(*(&_yellow)->port, _yellow.pin);
+led_on(&_yellow,1); // This is inverted, hence the "1"
 ```
 
 And check for button A being pressed using this line of code:
