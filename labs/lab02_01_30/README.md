@@ -65,9 +65,9 @@ Add definitions for each pin. The avr files have definitions for the pins, howev
 Add these very useful _macros_ to easily set, clear, and toggle a single bit within a register. (_Toggle_ will toggle the value of the bit between 0 and 1.) These are essentially inline function calls that are efficient while making code more readable and less prone to typos. `SET_BIT(DDRB,2)` for example will set bit 2 in the DDRB register to 1.
 
 ```  
-#define SET_BIT(port, pin) (port |= (1<<pin))
-#define CLEAR_BIT(port, pin) (port &= ~(1<<pin))
-#define TOGGLE_BIT(port, pin) (port ^= (1<<pin))
+#define SET_BIT(reg, pin) (reg |= (1<<pin))
+#define CLEAR_BIT(reg, pin) (reg &= ~(1<<pin))
+#define TOGGLE_BIT(reg, pin) (reg ^= (1<<pin))
 ```
 
 Add 2 more useful macros so that you never have to remember if 1 in a DDR register means it is configured as output or input!
