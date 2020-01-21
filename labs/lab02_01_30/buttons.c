@@ -1,8 +1,5 @@
 #include "buttons.h"
 
-// comment this line out when you are done debugging
-#define DEBUG
-
 /* configure the data direction for the specified on-board button.
  */
 void configure_button(IO_struct * button) {
@@ -11,9 +8,8 @@ void configure_button(IO_struct * button) {
   SET_BIT(*button->port, button->pin);
 }
 
-/* Initialize the specified on-board button.
-* The corresponding pin is set as input.
-* The pullup resistor is enabled.
+/* Initialize the specified on-board button. Button B is not here because it has no interrupt, but you could add it.
+* The corresponding pin is set as input. The pullup resistor is enabled.
 */
 void initialize_button(int button) {
   if (BUTTONA == button) {
