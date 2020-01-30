@@ -25,5 +25,5 @@ void initialize_button(int button) {
 * The bit value = 0 when pressed, 1 when not pressed.
 */
 int is_button_pressed(IO_struct * button) {
-  return (0 == (*button->portin &= (1 << button->pin)));
+  return (0 == (*button->portin & (1 << button->pin)));
 }
