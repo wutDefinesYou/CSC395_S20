@@ -51,16 +51,62 @@ int main(void) {
 	// Assume both buttons start in a not pressed state.
 
 	uint8_t green_on = 1;
+	uint8_t timer = 0;
+	uint8_t stateA = is_button_pressed(&_buttonA);
+	uint8_t stateC = is_button_pressed(&_buttonC);
 
   while(1) {
+		if (!stateA) {
+			stateA = is_button_pressed(&_buttonA);
+		}
+		else {
+			if (stateA && !is_button_pressed(&_buttonA)) {
+				led_on(&_green,INVERTED);
+			}
+		}
 
-		_delay_ms(1000);
-		led_toggle(&_yellow);
+		if (!stateC) {
+			stateC = is_button_pressed(&_buttonC);
+		}
+		else {
+			if (stateC && !is_button_pressed(&_buttonC)) {
+				led_off(&_green,INVERTED);
+			}
+		}
+
+		// _delay_ms(500);
+		// timer = (timer + 1) % 4;
+		// if (0 == timer % 1) {
+		// 	if (green_on) {
+		// 		led_toggle(&_green);
+		// 	} else {
+		// 		led_off(&_green,INVERTED);
+		// 	}
+		// }
+		// if (0 == timer % 2) {
+		// 	led_toggle(&_yellow);
+		// }
+
+
+		// if (stateA) {
+		// 	_delay_ms(1);
+		// 	if (!stateA) {
+		// 		led_on(&_green,INVERTED);
+		// 	}
+		// }
+		// if (stateC) {
+		// 	led_off(&_green,INVERTED);
+		// }
+		_delay_ms(5000);
 		if (green_on) {
 			led_toggle(&_green);
 		} else {
 			led_off(&_green,INVERTED);
 		}
+
+		_delay_ms(5000);
+		led_toggle(&_green);
+		led_toggle(&_yellow);
 
 	} // end while(1)
 
