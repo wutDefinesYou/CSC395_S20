@@ -27,3 +27,14 @@ void initialize_button(int button) {
 int is_button_pressed(IO_struct * button) {
   return (0 == (*button->portin & (1 << button->pin)));
 }
+
+// int is_button_released(IO_struct * button) {
+//   uint8_t state = is_button_pressed(&button);
+//   if (!state) {
+//     state = is_button_pressed(&button);
+//   }
+//   else {
+//     uint8_t state2 = is_button_pressed(&button);
+//     return !state2;
+//   }
+// }
