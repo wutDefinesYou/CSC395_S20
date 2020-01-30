@@ -24,4 +24,10 @@ void initialize_button(int button);
 */
 int is_button_pressed(IO_struct * button);
 
+/* Check if the user-specified button is pressed and released.
+Return 1 if so, 0 if not.
+* The bit value in the PINB register is 0 when pressed, 1 when not pressed.
+*/
+// int is_button_released(IO_struct * button);
+
 #endif
