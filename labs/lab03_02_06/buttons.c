@@ -2,7 +2,7 @@
 #include "leds.h"
 
 // comment this line out when you are done debugging
-#define DEBUG
+// #define DEBUG
 
 uint8_t button_mask = 0;
 
@@ -40,14 +40,14 @@ void enable_pcint(INTERRUPT_struct *state) {
   state->prev_state = PINB & state->mask;
 }
 
-// int setup_button_action(
-//   INTERRUPT_struct *state, int release, void(*callback)(void)) {
-//     if (release) {
-//       state->release_fn = callback;
-//     } else {
-//       state->press_fn = callback;
-//     }
-// }
+void setup_button_action(
+  INTERRUPT_struct *state, int release, void(*callback)(void)) {
+    if (release) {
+      state->release_fn = callback;
+    } else {
+      state->press_fn = callback;
+    }
+}
 
 ISR(PCINT0_vect) {
 
@@ -94,6 +94,23 @@ ISR(PCINT0_vect) {
     }
   }
     // repeat for button C
+    if (_interruptC.enabled) {
+      state = pinb_now & _interruptC.mask;
+
+      // if there was a state change
+      if (state != _interruptC.prev_state) {
+        // if it was pressed, call the press_fn()
+        if (!state) {
+          CLEAR_BIT(*(&_green)->port, _green.pin);
+        }
+        // else, call the release_fn()
+        else {
+          SET_BIT(*(&_green)->port, _green.pin);
+        }
+        // save state as prev_state
+        _interruptC.prev_state = state;
+      }
+    }
 }
 
 // void release () {
