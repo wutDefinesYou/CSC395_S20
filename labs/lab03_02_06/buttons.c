@@ -40,14 +40,14 @@ void enable_pcint(INTERRUPT_struct *state) {
   state->prev_state = PINB & state->mask;
 }
 
-int setup_button_action(
-  INTERRUPT_struct *state, int release, void(*callback)(void)) {
-    if (release) {
-      state->release_fn = callback;
-    } else {
-      state->press_fn = callback;
-    }
-}
+// int setup_button_action(
+//   INTERRUPT_struct *state, int release, void(*callback)(void)) {
+//     if (release) {
+//       state->release_fn = callback;
+//     } else {
+//       state->press_fn = callback;
+//     }
+// }
 
 ISR(PCINT0_vect) {
 
@@ -77,13 +77,27 @@ ISR(PCINT0_vect) {
   // remember that pinb_now holds state for only button A and C
   uint8_t state;
   if (_interruptA.enabled) {
-
+    state = pinb_now & _interruptA.mask;
 
     // if there was a state change
-
+    if (state != _interruptA.prev_state) {
       // if it was pressed, call the press_fn()
+      if (!state) {
+        SET_BIT(*(&_yellow)->port, _yellow.pin);
+      }
       // else, call the release_fn()
+      else {
+        CLEAR_BIT(*(&_yellow)->port, _yellow.pin);
+      }
       // save state as prev_state
+      _interruptA.prev_state = state;
     }
+  }
     // repeat for button C
 }
+
+// void release () {
+//   TOGGLE_BIT(*(&_green)->port, _green.pin);
+//   _delay_ms(150);
+//   TOGGLE_BIT(*(&_green)->port, _green.pin);
+// }
