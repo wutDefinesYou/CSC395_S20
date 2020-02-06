@@ -52,6 +52,9 @@ void setup_button_action(
 ISR(PCINT0_vect) {
 
   // read port B, mask for enabled buttons
+  // pinb_now would look like xxxx (0/1)xx(0/1)
+  //                                 |      |
+  //                         pin of: A      C
   uint8_t pinb_now = (PINB & button_mask);
 
   // check that pin change persists. ignore if not.
@@ -77,17 +80,22 @@ ISR(PCINT0_vect) {
   // remember that pinb_now holds state for only button A and C
   uint8_t state;
   if (_interruptA.enabled) {
+    // pinb_now is the current state for port B
+    // & mask of button A would produce xxxx (0/1)xxx
+    // so the bit related to button C is masked
+    // xxxx 1xxx : button A released
+    // xxxx 0xxx : button A pressed
     state = pinb_now & _interruptA.mask;
 
     // if there was a state change
     if (state != _interruptA.prev_state) {
       // if it was pressed, call the press_fn()
       if (!state) {
-        SET_BIT(*(&_yellow)->port, _yellow.pin);
+        _interruptA.press_fn();
       }
       // else, call the release_fn()
       else {
-        CLEAR_BIT(*(&_yellow)->port, _yellow.pin);
+        _interruptA.release_fn();
       }
       // save state as prev_state
       _interruptA.prev_state = state;
@@ -95,17 +103,18 @@ ISR(PCINT0_vect) {
   }
     // repeat for button C
     if (_interruptC.enabled) {
+      // same thing just masked the bit related to A, so only the state of button C is left
       state = pinb_now & _interruptC.mask;
 
       // if there was a state change
       if (state != _interruptC.prev_state) {
         // if it was pressed, call the press_fn()
         if (!state) {
-          CLEAR_BIT(*(&_green)->port, _green.pin);
+          _interruptC.press_fn();
         }
         // else, call the release_fn()
         else {
-          SET_BIT(*(&_green)->port, _green.pin);
+          _interruptC.release_fn();
         }
         // save state as prev_state
         _interruptC.prev_state = state;
@@ -113,8 +122,14 @@ ISR(PCINT0_vect) {
     }
 }
 
-// void release () {
-//   TOGGLE_BIT(*(&_green)->port, _green.pin);
-//   _delay_ms(150);
-//   TOGGLE_BIT(*(&_green)->port, _green.pin);
-// }
+// release_fn for button A
+void A_release () {
+  // when button A is pressed and released the flag increments by 1
+  A_released = A_released + 1;
+}
+
+// release_fn for button C
+void C_release () {
+  // when button C is pressed and eleased the flag increments by 1
+  C_released = C_released + 1;
+}
