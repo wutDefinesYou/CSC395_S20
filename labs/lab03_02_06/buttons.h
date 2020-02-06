@@ -28,6 +28,12 @@ extern IO_struct _buttonC;
 extern INTERRUPT_struct _interruptA;
 extern INTERRUPT_struct _interruptC;
 
+// int flags for buttons A and C to count how many times have buttons been released
+// volatile so they can be used across the code
+// will be initialized to 0 in main()
+volatile uint8_t A_released;
+volatile uint8_t C_released;
+
 /* Enable the PCINT for any of the buttons on the board.
  * This will set up for a PCINT ISR. Don't forget to call sei() in main.
  * param[in] INTERRUPT_struct *state : for A or C as defined above
@@ -50,4 +56,7 @@ void empty_function();
 // WARNING: ButtonC and RED LED share the pin. Do not use both.
 void initialize_button(IO_struct * button);
 
+// release functions for buttons A and C
+void A_release();
+void C_release();
 #endif
