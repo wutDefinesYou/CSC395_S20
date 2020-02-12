@@ -5,6 +5,9 @@ static uint8_t bYellowInit = 0;
 static uint8_t bRedInit = 0;
 static uint8_t bGreenInit = 0;
 
+static uint8_t bGPIOYellowInit = 0;
+static uint8_t bGPIORedInit = 0;
+static uint8_t bGPIOGreenInit = 0;
 
 /* configure the data direction for the specified on-board led.
  */
@@ -31,6 +34,26 @@ void initialize_led(int color) {
     configure_led(&_red);
     bRedInit = 1;
     break;
+  }
+}
+
+void GPIO_initialize_led(int color) {
+  switch(color) {
+    case(GPIO_YELLOW):
+      _GPIO_yellow = (IO_struct) {&DDRD, &PORTD, PIN1, &PIND};
+      configure_led(&_GPIO_yellow);
+      bGPIOYellowInit = 1;
+      break;
+    case(GPIO_GREEN):
+      _GPIO_green = (IO_struct) {&DDRD, &PORTD, PIN4, &PIND};
+      configure_led(&_GPIO_green);
+      bGPIOGreenInit = 1;
+      break;
+    case(GPIO_RED):
+      _GPIO_red = (IO_struct) {&DDRD, &PORTD, PIN2, &PIND};
+      configure_led(&_GPIO_red);
+      bGPIORedInit = 1;
+      break;
   }
 }
 
@@ -76,5 +99,9 @@ void light_show() {
     if (bYellowInit) flash_led(&_yellow, 0);  // not inverted (1 turns led on)
     if (bRedInit) flash_led(&_red, 1);  // inverted (0 turns led on)
     if (bGreenInit) flash_led(&_green, 1);
+
+    if (bGPIOYellowInit) flash_led(&_GPIO_yellow, 0);
+    if (bGPIOGreenInit) flash_led(&_GPIO_green, 0);
+    if (bGPIORedInit) flash_led(&_GPIO_red, 0);
   }
 }
