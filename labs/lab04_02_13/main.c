@@ -29,6 +29,10 @@ void initialize_system(void) {
 	initialize_led(GREEN);
 	initialize_led(YELLOW);
 
+	GPIO_initialize_led(GPIO_RED);
+	GPIO_initialize_led(GPIO_GREEN);
+	GPIO_initialize_led(GPIO_YELLOW);
+
 	// The "sanity check".
 	// When you see this pattern of lights you know the board has reset
 	light_show();
