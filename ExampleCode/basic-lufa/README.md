@@ -1,4 +1,4 @@
-# Basic Serial Communication
+# Basic USB-Serial Communication
 
 (Adapted From Jonathan Walz - SENG5831 Spring 2016)
 
