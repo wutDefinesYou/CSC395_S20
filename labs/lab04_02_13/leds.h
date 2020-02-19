@@ -11,6 +11,7 @@
 #define YELLOW 7
 #define RED 0
 
+// pin numbers on the port LEDs on the breadboard use
 #define GPIO_GREEN 4
 #define GPIO_YELLOW 1
 #define GPIO_RED 2
@@ -20,6 +21,7 @@ IO_struct _yellow;
 IO_struct _red;
 IO_struct _green;
 
+// Struct variables to configure LEDs on the breadboard
 IO_struct _GPIO_yellow;
 IO_struct _GPIO_red;
 IO_struct _GPIO_green;
@@ -27,6 +29,7 @@ IO_struct _GPIO_green;
 // Initialize the data struct for the specific on-board led
 void initialize_led(int color);
 
+// Initialize LEDs on the breadboard
 void GPIO_initialize_led(int color);
 
 /* Flash the designated on-board led for 250ms on, then 250ms off.
