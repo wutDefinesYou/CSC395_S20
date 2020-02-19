@@ -5,6 +5,7 @@ static uint8_t bYellowInit = 0;
 static uint8_t bRedInit = 0;
 static uint8_t bGreenInit = 0;
 
+// Indicators for LEDs from general purpose I/O
 static uint8_t bGPIOYellowInit = 0;
 static uint8_t bGPIORedInit = 0;
 static uint8_t bGPIOGreenInit = 0;
@@ -100,6 +101,7 @@ void light_show() {
     if (bRedInit) flash_led(&_red, 1);  // inverted (0 turns led on)
     if (bGreenInit) flash_led(&_green, 1);
 
+    // added LEDs on the breadboard to the light_show
     if (bGPIOYellowInit) flash_led(&_GPIO_yellow, 0);
     if (bGPIOGreenInit) flash_led(&_GPIO_green, 0);
     if (bGPIORedInit) flash_led(&_GPIO_red, 0);
