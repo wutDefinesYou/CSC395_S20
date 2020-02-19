@@ -38,7 +38,7 @@ void initialize_system(void) {
 	initialize_button(&_buttonA);
 	initialize_button(&_buttonC);
 
-	// enable pin change interrupt 0 and enable interrupts on Button A and C
+	// enable pin change interrupt 0 and enable interrupts on Button A and C 
 	enable_pcint(&_interruptA);
 	enable_pcint(&_interruptC);
 
@@ -61,7 +61,7 @@ void Yellow_Switch (){
 	switch(Yellow_State) {
 		case Y_Init:
 			// initially LED is off
-			led_toggle(&(_yellow), !INVERTED);
+			led_off(&(_yellow), !INVERTED);
 			// if button A pressed and released turn to state first release
 			if (1 == A_released % 3) {
 				Yellow_State = Y_First;
@@ -69,7 +69,7 @@ void Yellow_Switch (){
 			break;
 		case Y_First:
 			// after first release LED keeps on
-			led_toggle(&(_yellow), !INVERTED);
+			led_on(&(_yellow), !INVERTED);
 			// if button A pressed and released now it turns into state second release
 			if (2 == A_released % 3) {
 				Yellow_State = Y_Second;
@@ -79,14 +79,14 @@ void Yellow_Switch (){
 			// after second release LED will blink at 0.4 Hz
 			// 0ms LED off. 1250ms LED on. 2500ms LED off. 3750ms LED on ...
 			if (1 == timerY % 2) {
-				led_toggle(&(_yellow), !INVERTED);
+				led_on(&(_yellow), !INVERTED);
 			}
 			if (0 == timerY % 2) {
-				led_toggle(&(_yellow), !INVERTED);
+				led_off(&(_yellow), !INVERTED);
 			}
 			_delay_ms(1250);
 			timerY = (timerY + 1) % 2;
-			// if (timer % 1250 == 0) { toggle }
+
 			// if button A pressed and released now turn to state third release
 			if (0 == A_released % 3) {
 				Yellow_State = Y_Third;
@@ -94,7 +94,7 @@ void Yellow_Switch (){
 			break;
 		case Y_Third:
 			// after third release LED is turned off
-			led_toggle(&(_yellow), !INVERTED);
+			led_off(&(_yellow), !INVERTED);
 			// refresh the counter flag
 			A_released = A_released % 3;
 
@@ -113,23 +113,23 @@ void Yellow_Switch (){
 void Green_Switch (){
 	switch(Green_State) {
 		case G_Init:
-			led_toggle(&(_green), INVERTED);
+			led_off(&(_green), INVERTED);
 			if (1 == C_released % 3) {
 				Green_State = G_First;
 			}
 			break;
 		case G_First:
-			led_toggle(&(_green), INVERTED);
+			led_on(&(_green), INVERTED);
 			if (2 == C_released % 3) {
 				Green_State = G_Second;
 			}
 			break;
 		case G_Second:
 			if (1 == timerG % 2) {
-				led_toggle(&(_green), INVERTED);
+				led_on(&(_green), INVERTED);
 			}
 			if (0 == timerG % 2) {
-				led_toggle(&(_green), INVERTED);
+				led_off(&(_green), INVERTED);
 			}
 			_delay_ms(250);
 			timerG = (timerG + 1) % 2;
@@ -139,7 +139,7 @@ void Green_Switch (){
 			}
 			break;
 		case G_Third:
-			led_toggle(&(_green), INVERTED);
+			led_off(&(_green), INVERTED);
 			C_released = C_released % 3;
 
 			if (1 == C_released % 3) {
@@ -190,8 +190,6 @@ int main(void) {
 		Yellow_Switch();
 		// start green LED state machine
 		Green_Switch();
-		// _delay_ms(250);
-		// timer += 250;
 	} // end while(1)
 
 } /* end main() */
