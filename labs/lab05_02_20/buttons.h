@@ -53,4 +53,8 @@ void initialize_button(IO_struct * button);
 // release functions for buttons A and C
 void A_release();
 //void C_release();
+
+int is_button_pressed(IO_struct *button);
+int is_button_released(IO_struct *button);
+
 #endif
