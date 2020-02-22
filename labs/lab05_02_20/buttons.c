@@ -12,8 +12,8 @@ IO_struct _buttonC = { &DDRB, &PORTB, BUTTONC, &PINB };
 INTERRUPT_struct _interruptA =
 { PCINT_BUTTONA, (1<<BUTTONA), 0, (1<<BUTTONA), empty_function, empty_function};
 
-INTERRUPT_struct _interruptC =
-{ PCINT_BUTTONC, (1<<BUTTONC), 0, (1<<BUTTONC), empty_function, empty_function};
+// INTERRUPT_struct _interruptC =
+// { PCINT_BUTTONC, (1<<BUTTONC), 0, (1<<BUTTONC), empty_function, empty_function};
 
 void empty_function() {}
 
@@ -49,41 +49,20 @@ void setup_button_action(
     }
 }
 
-// button A to fire the interrupt
-ISR(PCINT0_vect) {
-	uint8_t pinb_now = (PINB & button_mask);
-  _delay_ms(10);
-  if (pinb_now ^ (PINB & button_mask)) {
-    return;
-  }
-
-  uint8_t state;
-  if (_interruptA.enabled) {
-    state = pinb_now & _interruptA.mask;
-
-    if (state != _interruptA.prev_state) {
-      // if it was pressed, call the press_fn()
-      if (!state) {
-        _interruptA.press_fn();
-      }
-      // else, call the release_fn()
-      else {
-        _interruptA.release_fn();
-      }
-      // save state as prev_state
-      _interruptA.prev_state = state;
-    }
-  }
+// return true if the button is pressed
+int is_button_pressed(IO_struct * button) {
+  return (0 == (*button->portin & (1 << button->pin)));
 }
 
-// When button A is released, blink the green LED 5 times at 2.5Hz
-void A_release () {
-  uint8_t i;
-  for (i=0; i<5; i++) {
-    _delay_ms(200);
-    led_toggle(&(_GPIO_green));
-    _delay_ms(200);
-    led_toggle(&(_GPIO_green));
+// return true if the button is pressed and released
+int is_button_released(IO_struct * button) {
+  if (is_button_pressed(button)) {
+    // see if the change persists
+    _delay_ms(10);
+    return !is_button_pressed(button);
+  }
+  else {
+    return 0;
   }
 }
 // ISR(PCINT0_vect) {
