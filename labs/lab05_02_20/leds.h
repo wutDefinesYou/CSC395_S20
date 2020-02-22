@@ -15,6 +15,7 @@
 #define GPIO_GREEN 4
 #define GPIO_YELLOW 1
 #define GPIO_RED 2
+#define GPIO_RED2 6
 
 // Global variables. They MUST be defined using initialized_led(<COLOR>)
 IO_struct _yellow;
@@ -25,6 +26,7 @@ IO_struct _green;
 IO_struct _GPIO_yellow;
 IO_struct _GPIO_red;
 IO_struct _GPIO_green;
+IO_struct _GPIO_red2;
 
 // Initialize the data struct for the specific on-board led
 void initialize_led(int color);
