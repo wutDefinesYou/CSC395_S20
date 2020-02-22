@@ -9,6 +9,7 @@ static uint8_t bGreenInit = 0;
 static uint8_t bGPIOYellowInit = 0;
 static uint8_t bGPIORedInit = 0;
 static uint8_t bGPIOGreenInit = 0;
+static uint8_t bGPIORed2Init = 0;
 
 /* configure the data direction for the specified on-board led.
  */
@@ -41,19 +42,24 @@ void initialize_led(int color) {
 void GPIO_initialize_led(int color) {
   switch(color) {
     case(GPIO_YELLOW):
-      _GPIO_yellow = (IO_struct) {&DDRD, &PORTD, PIN1, &PIND};
+      _GPIO_yellow = (IO_struct) {&DDRD, &PORTD, GPIO_YELLOW, &PIND};
       configure_led(&_GPIO_yellow);
       bGPIOYellowInit = 1;
       break;
     case(GPIO_GREEN):
-      _GPIO_green = (IO_struct) {&DDRD, &PORTD, PIN4, &PIND};
+      _GPIO_green = (IO_struct) {&DDRD, &PORTD, GPIO_GREEN, &PIND};
       configure_led(&_GPIO_green);
       bGPIOGreenInit = 1;
       break;
     case(GPIO_RED):
-      _GPIO_red = (IO_struct) {&DDRD, &PORTD, PIN2, &PIND};
+      _GPIO_red = (IO_struct) {&DDRD, &PORTD, GPIO_RED, &PIND};
       configure_led(&_GPIO_red);
       bGPIORedInit = 1;
+      break;
+    case(GPIO_RED2):
+      _GPIO_red2 = (IO_struct) {&DDRB, &PORTB, GPIO_RED2, &PINB};
+      configure_led(&_GPIO_red2);
+      bGPIORed2Init = 1;
       break;
   }
 }
@@ -105,5 +111,6 @@ void light_show() {
     if (bGPIOYellowInit) flash_led(&_GPIO_yellow, 0);
     if (bGPIOGreenInit) flash_led(&_GPIO_green, 0);
     if (bGPIORedInit) flash_led(&_GPIO_red, 0);
+    if (bGPIORed2Init) flash_led(&_GPIO_red2, 0);
   }
 }
