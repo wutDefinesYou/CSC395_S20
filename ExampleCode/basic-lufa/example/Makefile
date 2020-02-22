@@ -1,15 +1,5 @@
 PORT=/dev/tty.usbmodem14*
 
-#LUFA_PATH=/Users/amylarson/Documents/__CodingandGit/_MaterialGit/RTES/lufa-LUFA-151115/LUFA
-#VIRTUAL_SERIAL_PATH=/Users/amylarson/Documents/__CodingandGit/_MaterialGit/RTES/VirtualSerial
-
-#PATH1 = export VIRTUAL_SERIAL_PATH=/Users/amylarson/Documents/__CodingandGit/_MaterialGit/RTES/VirtualSerial
-#PATH2 = $(shell export LUFA_PATH=/Users/amylarson/Documents/__CodingandGit/_MaterialGit/RTES/lufa-LUFA-151115/LUFA)
-
-#LP =  "export 
-#@echo $(VSP)
-#@echo $(LP)
-
 ifndef VIRTUAL_SERIAL_PATH
 $(warning VIRTUAL_SERIAL_PATH must be set to use usb virtual serial)
 else
@@ -29,9 +19,6 @@ LDFLAGS+= -Wl,-gc-sections -Wl,-relax
 CC=avr-gcc
 TARGET=main
 OBJECT_FILES=main.o
-
-#first: all
-#	echo $(shell export LUFA_PATH=/Users/amylarson/Documents/__CodingandGit/_MaterialGit/RTES/lufa-LUFA-151115/LUFA)
 
 all: $(TARGET).hex
 
