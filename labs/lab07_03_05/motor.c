@@ -33,7 +33,10 @@ void setupMotor2(void) {
 
   // Turn data direction to input to turn motor off
   DDRE &= ~(1 << DDE2);
-
+  
+  // Data Direction to output for Motor pin
+  DDRB |= (1 << PINB6);
+  
   // Configure the motor direction pin to output
   m2_dir_control |= (1<< m2_dir_pin );
 
