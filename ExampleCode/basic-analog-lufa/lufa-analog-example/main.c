@@ -1,5 +1,13 @@
+#ifdef VIRTUAL_SERIAL
+#include <VirtualSerial.h>
+#else
+#warning VirtualSerial not defined, USB IO will not work
+#define SetupHardware();
+#define USB_Mainloop_Handler();
+#endif
 
 #define F_CPU 16000000
+
 #include <avr/interrupt.h>
 #include <avr/io.h>
 #include <util/delay.h>
@@ -7,10 +15,9 @@
 #include <stdio.h>
 
 #include "analog.h"
-#include "serial.h"
 
 void initialize_heartbeat() {
-  	DDRD |= (1<<DDD5);
+  DDRD |= (1<<DDD5);
 }
 
 void heartbeat_with_delay() {
@@ -18,11 +25,10 @@ void heartbeat_with_delay() {
   _delay_ms(250);
 }
 
-int main() {
-
+int main()
+{
   // initialize communication
-  char buffer[50];
-  setupUART();
+  SetUpHardware();
 
   // initialize power supply
   // I use this generally to plug into breadboard to power everything
@@ -50,13 +56,13 @@ int main() {
   while(1)
   {
     adc_results = adc_read(10);
-    sprintf(buffer,"%d\r\n",adc_results);
-    sendString(buffer);
+    printf("%d\r\n", adc_results);
+    USB_Mainloop_Handler(); //Handles USB communication
     heartbeat_with_delay();
 
     adc_results = adc_read(9);
-    sprintf(buffer,"%d\r\n",adc_results);
-    sendString(buffer);
+    printf("%d\r\n", adc_results);
+    USB_Mainloop_Handler(); //Handles USB communication
     heartbeat_with_delay();
   }
 }
