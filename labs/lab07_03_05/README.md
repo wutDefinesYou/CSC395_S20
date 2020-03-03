@@ -1,7 +1,7 @@
 ##### CSC395 RTES Spring 2020
 
 #### Lab 7 : non-PD Positional Control
-#### Due Thursday March 4 at end of day
+#### Due Thursday March 5 at end of day
 
 <hr>
 
@@ -23,6 +23,10 @@ Connect the motor powers to the green header at M2A and M2B (the 2 in the middle
 You have to use the wall adapter to give the board enough power to run the motor. There is a power switch on the side of the board. When you turn it on, that gives power to the motors from the wall adapter. A blue LED indicates power is on.
 
 #### 2. "UI" for Entering Reference Position
+
+IF you use buttons as described below, then you will need to POLL for button presses so as not to interfere with the encoder interrupt. 
+
+You may use key presses instead to set the reference position. 
 
 Configure your system so that whenever button A is pressed, the reference position (__a global volatile int16_t variable__) is set to +360 degrees relative to its current position, and the motor should move until it is at (or just beyond) that position. If you go to the pololu site and look up the motor #4825, you will notice "2248.86 counts per revolution" -- this is how many encoder counts there are per 360 degrees.
 
