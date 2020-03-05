@@ -60,7 +60,7 @@ All tasks have the same code structure within the scheduler. The scheduler check
 
 2. What is the period of the encoder interrupt when the motor is running at 25% duty cycle and at a 90% duty cycle? Given your WCET above and these periods, what is the utilization of this task for each of the duty cycles?
 
-3. If you run the scheduler every 1ms, what is the utilization of the scheduler?
+3. If you run the scheduler every 1ms, what is the utilization of the scheduler? What about every 10ms? State whether or not you think 10ms is a viable period of the scheduler. Briefly justify.
 
 4. The potentiometer readings will be polled. What do you think is a good period for this task and why? Given that period, what is the utilization of polling the potentiometers?
 
