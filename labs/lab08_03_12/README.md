@@ -1,6 +1,8 @@
 ### CSC395 RTES System Analysis
 ### Due : Thursday, March 12 BEFORE class
 
+Please submit a text file of your answers to the questions below in addition to your code for WCET analysis.
+
 #### Introduction
 
 The purpose of this lab is to analyze an embedded system with respect to its timing requirements, constraints, and characteristics. Unlike past labs, the primary focus here is the questions posed at the bottom of this document. Your answers should be thoughtful and complete.
