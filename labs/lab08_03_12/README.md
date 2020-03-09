@@ -1,5 +1,5 @@
 ### CSC395 RTES System Analysis
-### Due : Thursday, March 12 BEFORE class
+### Due : <del>Thursday, March 12</del> Tuesday, March 24 end of day
 
 Please submit a text file of your answers to the questions below in addition to your code for WCET analysis.
 
