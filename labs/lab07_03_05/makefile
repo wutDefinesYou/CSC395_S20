@@ -1,11 +1,11 @@
-PORT=/dev/tty.usbmodem14*
+PORT= COM4
 
 MCU=atmega32u4
 CFLAGS=-g -Wall -mcall-prologues -mmcu=$(MCU) -Os
 LDFLAGS=-Wl,-gc-sections -Wl,-relax
 CC=avr-gcc
 TARGET=main
-OBJECT_FILES= leds.o motor.o main.o
+OBJECT_FILES= leds.o motor.o communication.o main.o
 
 all: $(TARGET).hex
 
