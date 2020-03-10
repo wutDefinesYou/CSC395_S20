@@ -9,7 +9,7 @@
 
 #include "motor.h"
 #include "leds.h"
-
+#include "communication.h"
 
 /****************************************************************************
    ALL INITIALIZATION
@@ -70,13 +70,45 @@ int main(void) {
 
 	initialize_system();
 
+	menu = "MENU\n\r";
+	recv_buffer_ptr = 0;
+	user_command_ready = 0;
+
+	// flags to identify which rotate task is going on
+	uint8_t Frotate360 = 0;
+	uint8_t Brotate360 = 0;
+
+	//DDRD = 0x
+	setupUART();
+	sendString("Here we go!\r\n ");
+
   sei();
+
   while(1) {
 
-    move_motor();
-    motorBackward();
-    move_motor();
-    motorForward();
+		if (user_command_ready) {
+			sendChar('B');
+			handleInput();
+		}
 
+		// if motorForward
+		// correspond to A pressed
+		if (Frotate360 = 1) {
+			// if have rotated +360 degrees, stop
+			if (global_counts_m2 >= reference) {
+				OCR1B = 0;
+				Frotate360 = 0;
+			}
+		}
+
+		// if motorBackward
+		// correspond to C pressed
+		if (Brotate360 = 1) {
+			// if have rotated -360 degree, stop
+			if (global_counts_m2 <= reference) {
+				OCR1B = 0;
+				Brotate360 = 0;
+			}
+		}
   } /* end while(1) loop */
 } /* end main() */
