@@ -3,6 +3,8 @@
 
 Please submit a text file of your answers to the questions below in addition to your code for WCET analysis.
 
+> This will be assessed as 2 separate assignments. The questions are "Written Homework 1" and the code is "Lab 8"
+
 #### Introduction
 
 The purpose of this lab is to analyze an embedded system with respect to its timing requirements, constraints, and characteristics. Unlike past labs, the primary focus here is the questions posed at the bottom of this document. Your answers should be thoughtful and complete.
