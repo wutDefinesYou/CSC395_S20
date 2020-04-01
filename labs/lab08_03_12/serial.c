@@ -1,21 +1,10 @@
-#include "motor.h"
-#include "communication.h"
-#include <avr/io.h>
-#include <avr/interrupt.h>
-#include <util/delay.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
-volatile int16_t reference = 0;
-
-volatile uint8_t Frotate360;
-volatile uint8_t Brotate360;
-
-void handleInput();
+#include "serial.h"
 
 //Function that takes care of configurating the serial communication
 void setupUART(void) {
+  recv_buffer_ptr = 0;
+  user_command_ready = 0;
+
 	UBRR1 = (F_CPU/9600/16) - 1;
 
 	UCSR1C |= (1 << UCSZ11) | (1 << UCSZ10);		// 8 bit char size
@@ -124,18 +113,6 @@ void handleInput() {
 			case 'v':
 				// add your function here
 				sprintf( outputBuffer,"View Data.\r\n");
-				break;
-			// if A pressed, set reference position to +360 and begin rotating forward
-			case 'A':
-			case 'a':
-				Frotate360 = 1;
-				sprintf(outputBuffer,"Rotate 360 degree forward.\r\n");
-				break;
-			// if C pressed, set reference position to -360 and begin rotating backward
-			case 'C':
-			case 'c':
-				Brotate360 = 1;
-				sprintf(outputBuffer,"Rotate 360 degree backward.\r\n");
 				break;
 			default:
 				fGood = 0;

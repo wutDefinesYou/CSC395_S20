@@ -93,7 +93,10 @@ int main(void) {
 
 		// if motorForward
 		// correspond to A pressed
-		if (Frotate360 = 1) {
+		if (Frotate360 == 1) {
+			reference = global_counts_m2 + 2249;
+			motorForward();
+			OCR1B = 500;
 			// if have rotated +360 degrees, stop
 			if (global_counts_m2 >= reference) {
 				OCR1B = 0;
@@ -103,7 +106,10 @@ int main(void) {
 
 		// if motorBackward
 		// correspond to C pressed
-		if (Brotate360 = 1) {
+		if (Brotate360 == 1) {
+			reference = global_counts_m2 - 2249;
+			motorBackward();
+			OCR1B = 500;
 			// if have rotated -360 degree, stop
 			if (global_counts_m2 <= reference) {
 				OCR1B = 0;
