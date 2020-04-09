@@ -11,6 +11,10 @@
 #include "leds.h"
 #include "communication.h"
 
+// flags to identify which rotate task is going on
+uint8_t Frotate360 = 0;
+uint8_t Brotate360 = 0;
+
 /****************************************************************************
    ALL INITIALIZATION
 ****************************************************************************/
@@ -73,10 +77,6 @@ int main(void) {
 	menu = "MENU\n\r";
 	recv_buffer_ptr = 0;
 	user_command_ready = 0;
-
-	// flags to identify which rotate task is going on
-	uint8_t Frotate360 = 0;
-	uint8_t Brotate360 = 0;
 
 	//DDRD = 0x
 	setupUART();
