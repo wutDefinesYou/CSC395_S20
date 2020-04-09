@@ -1,0 +1,61 @@
+1.What is the WCET for the following tasks? State whether you used the average time analysis described above or an oscilloscope/logic analyzer.
+
+# Scheduler with 5 tasks.
+# Encoder code (do NOT run this in the ISR(PCINT) to determine WCET)
+# Potentiometer Readings
+
+I used the average time analysis describe above (and demonstrated in the video).
+(taskTime in microseconds for 100,000 iterations)
+
+loop time: 0.88
+scheduler: 19.3
+encoder: 6
+potentiometer: 111.19
+
+2.What is the period of the encoder interrupt when the motor is running at 25% duty cycle and at a 90% duty cycle? Given your WCET above and these periods, what is the utilization of this task for each of the duty cycles?
+
+...
+
+3.If you run the scheduler every 1ms, what is the utilization of the scheduler? What about every 10ms? State whether or not you think 10ms is a viable period of the scheduler. Briefly justify.
+
+// every 1ms
+period = 1 ms, execution time = 1930 / 100000 = 0.0193 ms
+utl = 0.0193 ms / 1 ms * 100% = 1.93%
+
+// every 10ms
+period = 10 ms, execution time = 0.0193 ms
+utl = 0.0193 ms / 10 ms * 100% = 0.193%
+
+In our case, where the count of ticks is updated every 1ms, it is better to run the scheduler at the same time to have status of each task updated as well. Since for the scheduler itself the utilization is very low, we are confident that it will not time out in any case. The shorter period of scheduler running, the more efficient of tasks to be scheduled and the system to be notified on time to execute them. Thus, I do not think 10ms is a viable period.
+
+4.The potentiometer readings will be polled. What do you think is a good period for this task and why? Given that period, what is the utilization of polling the potentiometers?
+
+I think we need to poll the potentiometer every 1ms too.
+period = 1 ms
+execution time = 11119 / 100000 = 0.11119 ms
+utl = 0.11119 ms / 1 ms * 100% = 11.119%
+
+5.Consider the various scheduling methods used throughout the labs and discussed in class. For each method below, discuss the control over the timing of that task, responsiveness of the system, and the impact on other tasks with respect to timing.
+
+a.Time-driven execution inside an ISR (e.g. toggle yellow every 250ms)
+
+This uses a system timer. The timing of the task is computed through match on tick number, which is directly computed based on the oscillator. An ISR has a very high priority so it will result in an immediate system response.
+Other tasks with lower priorities will be interrupted and postponed.
+
+b.Time-driven release managed by the scheduler
+
+The scheduler will update the individual flag for each task when their release time is reached. In my lab code, these
+flags will be checked and decided to be executed in main(). In my lab 6, three tasks are about to toggle leds in different period of time, and they are blinking on time just like being toggled inside an ISR. The system should also
+have an immediate response to those flags too. Once found flags true tasks are executed right at that time. I think the order flags are polled matters when it comes to the priority. If the flag of a task is polled first and the task ran over the release time for the next task, this next task is postponed.
+
+c.Event-driven using an external interrupt with execution inside an ISR (e.g. toggle green in response to a button press)
+
+The first thing comes to my mind is the example of brake system inside a car. It should applies similar to the event-driven system using an external interrupt inside an ISR. When it is fired, the system reacts to the event immediately and postpone other related tasks.
+
+d.Event-driven using an external interrupt to release a task (e.g. setting a flag in response to a button press that signals a task in main() to execute)
+
+I think it works in the same property as time-driven release managed by the scheduler, only that it has higher priority than regular time-driven tasks. My lab 6 when I press button C the green led will begin blinking 5 times and other leds paused working during this period.
+
+e.Periodic polling of an event (e.g. Polling for a button press)
+
+I think this has the least control over timing and priority. Because polling requires its own execution time, and to flag and set polling state requires other extra time, and finally in main() to identify the flag and decide to execute the task also requires time. It needs more steps than other tasks and might affect release time, and easily be interrupted.
