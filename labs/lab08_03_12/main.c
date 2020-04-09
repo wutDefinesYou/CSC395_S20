@@ -10,6 +10,9 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
+#include <stdio.h>
+#include <string.h>
+
 #define INVERTED 1
 
 volatile uint64_t ms_ticks = 0;
@@ -147,7 +150,10 @@ uint16_t potentiometer_task(uint8_t channel) {
 }
 
 int main(void) {
+  USBCON = 0;
+
   initialize_system();
+  timer0_setup();
 
   sei();
   uint32_t iterations = 100000;
@@ -167,7 +173,11 @@ int main(void) {
   }
 
   cli();
-  loopTime = start - ms_ticks;
+  loopTime = ms_ticks - start;
+  char loop_str[50];
+  sprintf(loop_str, "%d", (int)loopTime);
+  strcat(loop_str, " <- loop time\n");
+  sendString(loop_str);
   start = ms_ticks;
   sei();
   led_on(&_yellow, 0);
@@ -177,8 +187,11 @@ int main(void) {
   }
 
   cli();
-  taskTime = start - ms_ticks - loopTime;
-  printf("SCHEDULER TASK TIME: %d, LOOP TIME: %d", (int)taskTime, (int)loopTime);
+  taskTime = ms_ticks - start - loopTime;
+  char taskTime_str[50];
+  sprintf(taskTime_str, "%d", (int)taskTime);
+  strcat(taskTime_str, " <- scheduler task time\n");
+  sendString(taskTime_str);
   sei();
   led_on(&_green, 1);
 
@@ -192,8 +205,11 @@ int main(void) {
   }
 
   cli();
-  taskTime = start - ms_ticks - loopTime;
-  printf("ENCODER TASK TIME: %d, LOOP TIME: %d", (int)taskTime, (int)loopTime);
+  taskTime = ms_ticks - start - loopTime;
+  char encoder_str[50];
+  sprintf(encoder_str, "%d", (int)taskTime);
+  strcat(encoder_str, " <- encoder task time\n");
+  sendString(encoder_str);
   sei();
   led_on(&_GPIO_red2, 0);
 
@@ -207,9 +223,13 @@ int main(void) {
   }
 
   cli();
-  taskTime = start - ms_ticks - loopTime;
-  printf("POTENTIOMETER TASK TIME: %d, LOOP TIME: %d", (int)taskTime, (int)loopTime);
+  taskTime = ms_ticks - start - loopTime;
+  char pot_str[50];
+  sprintf(pot_str, "%d", (int)taskTime);
+  strcat(pot_str, " <- potentiometer task time\n");
+  sendString(pot_str);
   sei();
   led_on(&_GPIO_green, 0);
 
+  return 0;
 } /* end main() */
